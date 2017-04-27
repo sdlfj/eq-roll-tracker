@@ -1,13 +1,13 @@
 {
-  "name": "electron-react-boilerplate",
-  "productName": "electron-react-boilerplate",
+  "name": "eq-roll-tracker",
+  "productName": "EqRollTracker",
   "version": "1.0.0",
-  "description": "Electron application boilerplate based on React, React Router, Webpack, React Hot Loader for rapid application development",
-  "main": "./main.js",
+  "description": "Electron app that monitors EverQuest log files for player /random's",
+  "main": "main.js",
   "author": {
-    "name": "C. T. Lin",
-    "email": "chentsulin@gmail.com",
-    "url": "https://github.com/chentsulin"
+    "name": "sdlfj",
+    "email": "g_rice@protonmail.com",
+    "url": "https://bitbucket.org/sdlfj"
   },
   "scripts": {
     "postinstall": "npm rebuild --runtime=electron --target=1.6.1 --disturl=https://atom.io/download/atom-shell --build-from-source"
