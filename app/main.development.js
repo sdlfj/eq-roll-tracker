@@ -45,11 +45,20 @@ app.on('ready', async () => {
     await installExtensions();
   }
 
-  mainWindow = new BrowserWindow({
-    show: false,
-    width: 1024,
-    height: 728
-  });
+  if (process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true') {
+    mainWindow = new BrowserWindow({
+      show: false,
+      width: 500,
+      height: 728
+    });
+  } else {
+    mainWindow = new BrowserWindow({
+      resizable: false,
+      show: false,
+      width: 500,
+      height: 728
+    });
+  }
 
   mainWindow.loadURL(`file://${__dirname}/app.html`);
 
@@ -67,6 +76,10 @@ app.on('ready', async () => {
     mainWindow = null;
   });
 
-  const menuBuilder = new MenuBuilder(mainWindow);
-  menuBuilder.buildMenu();
+  if (process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true') {
+    const menuBuilder = new MenuBuilder(mainWindow);
+    menuBuilder.buildMenu();
+  } else {
+    mainWindow.setMenu(null);
+  }
 });

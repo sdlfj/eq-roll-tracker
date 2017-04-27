@@ -2,13 +2,15 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './Home.css';
+import Settings from './Settings';
+import Parser from './Parser';
 
 export default class Home extends Component {
   render() {
     return (
       <div>
-        <div className={styles.container} data-tid="container">
-        </div>
+        <Settings />
+        <Parser />
       </div>
     );
   }

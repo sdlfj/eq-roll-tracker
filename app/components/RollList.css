@@ -1,0 +1,14 @@
+.rollList {
+  position: absolute;
+  padding: 0;
+  margin: 0;
+  left: 50%;
+  transform: translate(-50%, 0);
+  width: 400px;
+  top: 50px;
+  bottom: 30px;
+  border: 1px solid black;
+  overflow-x: hidden;
+  overflow-y: auto;
+  list-style-type: unset;
+}

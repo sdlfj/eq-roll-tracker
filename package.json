@@ -185,6 +185,7 @@
   },
   "dependencies": {
     "electron-debug": "^1.1.0",
+    "electron-rebuild": "^1.5.7",
     "extract-text-webpack-plugin": "^2.1.0",
     "font-awesome": "^4.7.0",
     "history": "^4.6.1",
@@ -196,8 +197,10 @@
     "react-router-dom": "^4.1.1",
     "react-router-redux": "^5.0.0-alpha.6",
     "redux": "^3.6.0",
+    "redux-saga": "^0.14.8",
     "redux-thunk": "^2.2.0",
-    "source-map-support": "^0.4.14"
+    "source-map-support": "^0.4.14",
+    "tail": "^1.2.1"
   },
   "devEngines": {
     "node": ">=6.x",

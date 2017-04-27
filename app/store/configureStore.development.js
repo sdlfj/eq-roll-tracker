@@ -5,6 +5,10 @@ import { createBrowserHistory } from 'history';
 import { routerMiddleware, push } from 'react-router-redux';
 import { createLogger } from 'redux-logger';
 import rootReducer from '../reducers';
+import createSagaMiddleware from 'redux-saga';
+import sagas from '../sagas';
+
+const sagaMiddleware = createSagaMiddleware();
 
 
 
@@ -14,6 +18,9 @@ const configureStore = (initialState: ?counterStateType) => {
   // Redux Configuration
   const middleware = [];
   const enhancers = [];
+
+  // Saga Middleware
+  middleware.push(sagaMiddleware);
 
   // Thunk Middleware
   middleware.push(thunk);
@@ -56,6 +63,8 @@ const configureStore = (initialState: ?counterStateType) => {
       store.replaceReducer(require('../reducers')) // eslint-disable-line global-require
     );
   }
+
+  sagaMiddleware.run(sagas);
 
   return store;
 };
