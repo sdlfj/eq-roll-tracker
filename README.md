@@ -1,6 +1,6 @@
 # eq-roll-tracker
 
-Simple app that monitors an EverQuest log file for player's /random commands.
+Simple app that monitors an EverQuest log file for players' /random commands.
 
 * If a starting phrase is specified, /random's will not be collected until that phrase is seen.
 * Repeating the phrase will reset the current result list.
