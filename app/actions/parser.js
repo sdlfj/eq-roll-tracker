@@ -1,5 +1,5 @@
 // @flow
-import type { parserStateType } from '../reducers/parser';
+import type { rollType } from '../reducers/parser';
 
 export const BEGIN_PARSING = 'BEGIN_PARSING';
 export const END_PARSING = 'END_PARSING';
@@ -30,42 +30,42 @@ export function resetRolls() {
   };
 }
 
-export function addRoll(roll) {
+export function addRoll(roll: rollType) {
   return {
     type: ADD_ROLL,
     payload: roll
   };
 }
 
-export function newRollStart(playerName) {
+export function newRollStart(playerName: string) {
   return {
     type: NEW_ROLL_START,
     payload: playerName
   };
-};
+}
 
-export function newRollEnd(line) {
+export function newRollEnd(line: string) {
   return {
     type: NEW_ROLL_END,
     payload: line
   };
-};
+}
 
-export function setStatus(status) {
+export function setStatus(status: string) {
   return {
     type: SET_STATUS,
     payload: status
   };
 }
 
-export function setParsing(parsing) {
+export function setParsing(parsing: boolean) {
   return {
     type: SET_PARSING,
     payload: parsing
   };
 }
 
-export function newLine(data) {
+export function newLine(data: string) {
   return {
     type: NEW_LINE,
     payload: data

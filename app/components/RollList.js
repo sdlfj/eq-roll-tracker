@@ -1,4 +1,4 @@
-// #flow
+// @flow
 import React, { Component } from 'react';
 import type { rollType } from '../reducers/parser';
 import styles from './RollList.css';
@@ -11,9 +11,9 @@ class RollList extends Component {
   render() {
     const { rolls } = this.props;
 
-    const rollElements = rolls.map((roll) => {
-      return (<li key={roll.playerName}>{roll.playerName} {roll.rollValue}</li>);
-    });
+    const rollElements = rolls.map(
+      (roll) => <li key={roll.playerName}>{roll.playerName} {roll.rollValue}</li>
+    );
 
     return (
       <ul className={styles.rollList}>

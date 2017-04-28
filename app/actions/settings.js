@@ -1,6 +1,4 @@
 // @flow
-import type { settingsStateType } from '../reducers/settings';
-
 export const SET_LOG_FILE = 'SET_LOG_FILE';
 export const SET_STARTING_PHRASE = 'SET_STARTING_PHRASE';
 export const SET_ROLL_LIMIT = 'SET_ROLL_LIMIT';

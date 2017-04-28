@@ -4,13 +4,11 @@ import { hashHistory } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import { routerMiddleware, push } from 'react-router-redux';
 import { createLogger } from 'redux-logger';
-import rootReducer from '../reducers';
 import createSagaMiddleware from 'redux-saga';
+import rootReducer from '../reducers';
 import sagas from '../sagas';
 
 const sagaMiddleware = createSagaMiddleware();
-
-
 
 const history = createBrowserHistory();
 

@@ -19,14 +19,14 @@ const initialState = {
 };
 
 export default function settings(state: settingsStateType = initialState, action: actionType) {
-  switch(action.type) {
+  switch (action.type) {
     case SET_LOG_FILE:
-      return {...state, logFile: action.payload};
+      return { ...state, logFile: action.payload };
     case SET_STARTING_PHRASE:
-      return {...state, startingPhrase: action.payload};
+      return { ...state, startingPhrase: action.payload };
     case SET_ROLL_LIMIT:
-      return {...state, rollLimit: action.payload};
+      return { ...state, rollLimit: action.payload };
     default:
-      return state
+      return state;
   }
 }

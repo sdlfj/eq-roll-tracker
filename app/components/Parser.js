@@ -5,8 +5,18 @@ import { connect } from 'react-redux';
 import * as ParserActions from '../actions/parser';
 import styles from './Parser.css';
 import RollList from './RollList';
+import type { rollType } from '../reducers/parser';
 
 class Parser extends Component {
+  props: {
+    beginParsing: () => void,
+    endParsing: () => void,
+    parsing: boolean,
+    rolls: Array<rollType>,
+    validSettings: boolean,
+    reset: () => void,
+    status: string
+  }
 
   handleBeginParsingClick() {
     const { beginParsing } = this.props;
@@ -35,7 +45,7 @@ class Parser extends Component {
           <div className={styles.left}>Status: {status}</div>
           <div className={styles.right}># of Rolls: {rolls.length}</div>
         </div>
-        <RollList rolls={rolls}/>
+        <RollList rolls={rolls} />
       </div>
     );
   }
@@ -47,12 +57,12 @@ function mapStateToProps(state) {
     validSettings: state.settings.logFile.length > 0,
     rolls: state.parser.rolls,
     status: state.parser.status
-  }
+  };
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(ParserActions, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Parser);
+export default connect(mapStateToProps, mapDispatchToProps)(Parser); // eslint-disable-line
 

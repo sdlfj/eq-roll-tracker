@@ -24,18 +24,18 @@ const initialState = {
 };
 
 export default function parser(state: parserStateType = initialState, action: actionType) {
-  switch(action.type) {
+  switch (action.type) {
     case SET_PARSING:
-      return {...state, parsing: action.payload};
+      return { ...state, parsing: action.payload };
     case SET_STATUS:
-      return {...state, status: action.payload};
+      return { ...state, status: action.payload };
     case ADD_ROLL:
       return {
         ...state,
-        rolls: [...state.rolls, action.payload].sort((a,b) => a.rollValue < b.rollValue)
+        rolls: [...state.rolls, action.payload].sort((a, b) => b.rollValue - a.rollValue) // eslint-disable-line
       };
     case RESET_ROLLS:
-      return {...state, rolls: []};
+      return { ...state, rolls: [] };
     default:
       return state;
   }
