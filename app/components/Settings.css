@@ -1,3 +1,8 @@
 .input {
   width: 80%;
 }
+
+.limits div{
+  width: 50%;
+  float: left;
+}

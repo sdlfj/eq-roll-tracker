@@ -2,6 +2,7 @@
 export const SET_LOG_FILE = 'SET_LOG_FILE';
 export const SET_STARTING_PHRASE = 'SET_STARTING_PHRASE';
 export const SET_ROLL_LIMIT = 'SET_ROLL_LIMIT';
+export const SET_TIME_LIMIT = 'SET_TIME_LIMIT';
 
 export function setLogFile(filePath: string) {
   return {
@@ -17,9 +18,16 @@ export function setStartingPhrase(startingPhrase: string) {
   };
 }
 
-export function setRollLimit(limit: number) {
+export function setRollLimit(limit: string) {
   return {
     type: SET_ROLL_LIMIT,
     payload: limit
+  };
+}
+
+export function setTimeLimit(timeLimit: string) {
+  return {
+    type: SET_TIME_LIMIT,
+    payload: timeLimit
   };
 }

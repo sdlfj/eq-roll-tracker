@@ -9,15 +9,22 @@ import styles from './Settings.css';
 const { BrowserWindow } = remote;
 
 class Settings extends Component {
+
   props: {
     logFile: string,
     startingPhrase: string,
     setStartingPhrase: (string) => void,
     setLogFile: (string) => void,
     setRollLimit: (number) => void,
-    rollLimit: number,
-    parsing: boolean
+    setTimeLimit: (number) => void,
+    rollLimit: string | number,
+    parsing: boolean,
+    timeLimit?: string | number
   };
+
+  static defaultProps = {
+    timeLimit: 20
+  }
 
   chooseLogFile() {
     const { setLogFile } = this.props;
@@ -40,20 +47,25 @@ class Settings extends Component {
 
   handleRollLimitChange(e) {
     const { setRollLimit } = this.props;
-    const val = parseInt(e.target.value, 10);
-    if (!isNaN(val)) {
-      setRollLimit(val);
-    }
+    setRollLimit(e.target.value);
+  }
+
+  handleTimeLimitChange(e) {
+    const { setTimeLimit } = this.props;
+    setTimeLimit(e.target.value);
   }
 
   render() {
-    const { logFile, startingPhrase, rollLimit, parsing } = this.props;
+    const { logFile, startingPhrase, rollLimit, parsing, timeLimit } = this.props;
     /* eslint-disable */
     return (
       <div>
         <div>Log File:<br /><input disabled={parsing} className={styles.input} type="text" value={logFile} onChange={::this.handleLogFileChange} /><button disabled={parsing} onClick={::this.chooseLogFile}>Browse</button></div>
         <div>Starting Phrase (or regex):<br /><input disabled={parsing} className={styles.input} type="text" value={startingPhrase} onChange={::this.handleStartingPhraseChange} /></div>
-        <div>Roll Limit:<br /><input type="number" disabled={parsing} className={styles.input} value={rollLimit} onChange={::this.handleRollLimitChange} /></div>
+        <div className={styles.limits} >
+          <div>Roll Limit:<br /><input type="number" disabled={parsing} className={styles.input} value={rollLimit} onChange={::this.handleRollLimitChange} /></div>
+          <div>Time Limit (seconds):<br /><input type="number" disabled={parsing} className={styles.input} value={timeLimit} onChange={::this.handleTimeLimitChange} /></div>
+        </div>
       </div>
     );
     /* eslint-enable */
@@ -65,7 +77,8 @@ function mapStateToProps(state) {
     logFile: state.settings.logFile,
     startingPhrase: state.settings.startingPhrase,
     rollLimit: state.settings.rollLimit,
-    parsing: state.parser.parsing
+    parsing: state.parser.parsing,
+    timeLimit: state.settings.timeLimit
   };
 }
 

@@ -9,6 +9,7 @@ export const ADD_ROLL = 'ADD_ROLL';
 export const RESET_ROLLS = 'RESET_ROLLS';
 export const SET_STATUS = 'SET_STATUS';
 export const SET_PARSING = 'SET_PARSING';
+export const COUNTDOWN_ENDED = 'COUNTDOWN_ENDED';
 export const NEW_LINE = 'NEW_LINE';
 export const RESET = 'RESET';
 
@@ -44,7 +45,7 @@ export function newRollStart(playerName: string) {
   };
 }
 
-export function newRollEnd(line: string) {
+export function newRollEnd(line: {}) {
   return {
     type: NEW_ROLL_END,
     payload: line
@@ -75,5 +76,11 @@ export function newLine(data: string) {
 export function reset() {
   return {
     type: RESET
+  };
+}
+
+export function countdownEnded() {
+  return {
+    type: COUNTDOWN_ENDED
   };
 }

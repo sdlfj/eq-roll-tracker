@@ -7,15 +7,80 @@ import styles from './Parser.css';
 import RollList from './RollList';
 import type { rollType } from '../reducers/parser';
 
+const getTimeLeft = (startTime: number, limit: number) =>
+  Math.ceil((limit - (new Date().getTime() - startTime)) / 1000);
+
 class Parser extends Component {
+  state: {
+    timeLeft: number
+  };
+
   props: {
     beginParsing: () => void,
     endParsing: () => void,
+    countdownEnded: () => void,
     parsing: boolean,
     rolls: Array<rollType>,
     validSettings: boolean,
     reset: () => void,
-    status: string
+    status: string,
+    timerActive: boolean,
+    timerStartTime: number,
+    timeLimit?: number,
+    startingPhrase: string
+  }
+
+  countdownTimeout: ?number;
+  countdownInterval: ?number;
+
+  static defaultProps = {
+    timerStartTime: 0,
+    timeLimit: undefined
+  }
+
+  constructor(props) {
+    super(props);
+    this.state = { timeLeft: props.timeLimit };
+  }
+
+  componentDidUpdate(prevProps) {
+    const { timerActive, timerStartTime } = this.props;
+
+    if (timerActive === true &&
+      (prevProps.timerActive === false ||
+       prevProps.timerStartTime !== timerStartTime)) {
+      this.startCountdown();
+    } else if (prevProps.timerActive === true && timerActive === false) {
+      this.clearTimers();
+    }
+  }
+
+  clearTimers() {
+    if (this.countdownTimeout) {
+      clearTimeout(this.countdownTimeout);
+      this.countdownTimeout = null;
+    }
+
+    if (this.countdownInterval) {
+      clearInterval(this.countdownInterval);
+      this.countdownInterval = null;
+    }
+  }
+
+  startCountdown() {
+    const { timeLimit, timerStartTime } = this.props;
+    this.clearTimers();
+
+    if (timeLimit !== undefined) {
+      this.setState({ timeLeft: timeLimit });
+      this.countdownInterval = setInterval(() => {
+        this.setState({ timeLeft: getTimeLeft(timerStartTime, timeLimit * 1000) });
+      }, 1000);
+
+      this.countdownTimeout = setTimeout(() => {
+        this.props.countdownEnded();
+      }, timeLimit * 1000);
+    }
   }
 
   handleBeginParsingClick() {
@@ -32,8 +97,22 @@ class Parser extends Component {
     const {
       parsing, validSettings, rolls,
       status, beginParsing, endParsing,
-      reset
+      reset, timerActive, timeLimit,
+      startingPhrase
     } = this.props;
+
+    const { timeLeft } = this.state;
+
+    const timeString = () => {
+      if (startingPhrase.length > 0) {
+        if (timerActive) {
+          return <span><b> Time left:</b> {timeLeft}</span>;
+        } else if (timeLimit) {
+          return <span><b> Time left:</b> {timeLimit}</span>;
+        }
+      }
+    };
+
     return (
       <div className={styles.parser}>
         <div className={styles.menu}>
@@ -42,8 +121,10 @@ class Parser extends Component {
           <button disabled={!parsing} onClick={endParsing}>End Parsing</button>
         </div>
         <div className={styles.status} >
-          <div className={styles.left}>Status: {status}</div>
-          <div className={styles.right}># of Rolls: {rolls.length}</div>
+          <div className={styles.left}><b>Status:</b> {status}</div>
+          <div className={styles.right}>
+            <b># of Rolls:</b> {rolls.length}{timeString()}
+          </div>
         </div>
         <RollList rolls={rolls} />
       </div>
@@ -56,7 +137,11 @@ function mapStateToProps(state) {
     parsing: state.parser.parsing,
     validSettings: state.settings.logFile.length > 0,
     rolls: state.parser.rolls,
-    status: state.parser.status
+    status: state.parser.status,
+    timerActive: state.timer.active,
+    timerStartTime: state.timer.startTime,
+    timeLimit: parseInt(state.settings.timeLimit, 10),
+    startingPhrase: state.settings.startingPhrase
   };
 }
 

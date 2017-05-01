@@ -1,10 +1,11 @@
 // @flow
-import { SET_LOG_FILE, SET_STARTING_PHRASE, SET_ROLL_LIMIT } from '../actions/settings';
+import { SET_LOG_FILE, SET_STARTING_PHRASE, SET_ROLL_LIMIT, SET_TIME_LIMIT } from '../actions/settings';
 
 export type settingsStateType = {
   logFile: string,
   startingPhrase: string,
-  rollLimit: number
+  rollLimit: string,
+  timeLimit?: string
 };
 
 type actionType = {
@@ -15,7 +16,8 @@ type actionType = {
 const initialState = {
   logFile: '',
   startingPhrase: 'You shout, \'roll for',
-  rollLimit: 100
+  rollLimit: '100',
+  timeLimit: '20'
 };
 
 export default function settings(state: settingsStateType = initialState, action: actionType) {
@@ -26,6 +28,8 @@ export default function settings(state: settingsStateType = initialState, action
       return { ...state, startingPhrase: action.payload };
     case SET_ROLL_LIMIT:
       return { ...state, rollLimit: action.payload };
+    case SET_TIME_LIMIT:
+      return { ...state, timeLimit: action.payload };
     default:
       return state;
   }
