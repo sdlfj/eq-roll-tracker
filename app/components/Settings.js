@@ -10,6 +10,7 @@ const { BrowserWindow } = remote;
 
 class Settings extends Component {
 
+  /* eslint-disable */
   props: {
     logFile: string,
     startingPhrase: string,
@@ -19,8 +20,10 @@ class Settings extends Component {
     setTimeLimit: (number) => void,
     rollLimit: string | number,
     parsing: boolean,
-    timeLimit?: string | number
+    timeLimit?: string | number,
+    autoClipboard: boolean
   };
+  /* eslint-enable */
 
   static defaultProps = {
     timeLimit: 20
@@ -34,37 +37,31 @@ class Settings extends Component {
     );
   }
 
+  handleInputChange(e) {
+    const target = e.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name.charAt(0).toUpperCase() + target.name.slice(1);
 
-  handleStartingPhraseChange(e) {
-    const { setStartingPhrase } = this.props;
-    setStartingPhrase(e.target.value);
-  }
-
-  handleLogFileChange(e) {
-    const { setLogFile } = this.props;
-    setLogFile(e.target.value);
-  }
-
-  handleRollLimitChange(e) {
-    const { setRollLimit } = this.props;
-    setRollLimit(e.target.value);
-  }
-
-  handleTimeLimitChange(e) {
-    const { setTimeLimit } = this.props;
-    setTimeLimit(e.target.value);
+    this.props[`set${name}`](value);
   }
 
   render() {
-    const { logFile, startingPhrase, rollLimit, parsing, timeLimit } = this.props;
+    const {
+      logFile, startingPhrase,
+      rollLimit, parsing, timeLimit,
+      autoClipboard
+    } = this.props;
     /* eslint-disable */
     return (
       <div>
-        <div>Log File:<br /><input disabled={parsing} className={styles.input} type="text" value={logFile} onChange={::this.handleLogFileChange} /><button disabled={parsing} onClick={::this.chooseLogFile}>Browse</button></div>
-        <div>Starting Phrase (or regex):<br /><input disabled={parsing} className={styles.input} type="text" value={startingPhrase} onChange={::this.handleStartingPhraseChange} /></div>
+        <div>Log File:<br /><input name="logFile" disabled={parsing} className={styles.input} type="text" value={logFile} onChange={::this.handleInputChange} /><button disabled={parsing} onClick={::this.chooseLogFile}>Browse</button></div>
+        <div className={styles.limits}>
+          <div>Starting Phrase (or regex):<br /><input name="startingPhrase" disabled={parsing} className={styles.input} type="text" value={startingPhrase} onChange={::this.handleInputChange} /></div>
+          <div>Time Limit (seconds):<br /><input name="timeLimit" type="number" disabled={parsing} className={styles.input} value={timeLimit} onChange={::this.handleInputChange} /></div>
+        </div>
         <div className={styles.limits} >
-          <div>Roll Limit:<br /><input type="number" disabled={parsing} className={styles.input} value={rollLimit} onChange={::this.handleRollLimitChange} /></div>
-          <div>Time Limit (seconds):<br /><input type="number" disabled={parsing} className={styles.input} value={timeLimit} onChange={::this.handleTimeLimitChange} /></div>
+          <div>Roll Limit:<br /><input name="rollLimit" type="number" disabled={parsing} className={styles.input} value={rollLimit} onChange={::this.handleInputChange} /></div>
+          <div className={styles.checkbox}><input name="autoClipboard" type="checkbox" checked={autoClipboard} onChange={::this.handleInputChange}/> Add winners to clipboard</div>
         </div>
       </div>
     );
@@ -78,7 +75,8 @@ function mapStateToProps(state) {
     startingPhrase: state.settings.startingPhrase,
     rollLimit: state.settings.rollLimit,
     parsing: state.parser.parsing,
-    timeLimit: state.settings.timeLimit
+    timeLimit: state.settings.timeLimit,
+    autoClipboard: state.settings.autoClipboard
   };
 }
 

@@ -115,16 +115,17 @@ export function* rollBuilder(action) {
   if (parseInt(settings.rollLimit, 10) === parseInt(rollLimit, 10)) {
     if (!parser.rolls.find((roll) => roll.playerName === playerName)) {
       yield put(actions.addRoll({ playerName, rollValue }));
-      const winningRolls = yield select(getWinners);
-      if (winningRolls && winningRolls.length > 0) {
-        const names = winningRolls.map((r) => r.playerName).join(', ');
-        clipboard.writeText(`${names} ${winningRolls[0].rollValue}`);
-      }
     }
   }
 }
 
 export function* countdownEnded() {
+  const settings = yield select(getSettings);
   yield put(actions.setStatus('awaiting phrase'));
   yield put(stopTimer());
+  const winningRolls = yield select(getWinners);
+  if (settings.autoClipboard && winningRolls && winningRolls.length > 0) {
+    const names = winningRolls.map((r) => r.playerName).join(', ');
+    clipboard.writeText(`${names} ${winningRolls[0].rollValue}`);
+  }
 }

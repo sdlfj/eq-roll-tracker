@@ -1,11 +1,12 @@
 // @flow
-import { SET_LOG_FILE, SET_STARTING_PHRASE, SET_ROLL_LIMIT, SET_TIME_LIMIT } from '../actions/settings';
+import { SET_LOG_FILE, SET_STARTING_PHRASE, SET_ROLL_LIMIT, SET_TIME_LIMIT, SET_AUTO_CLIPBOARD } from '../actions/settings';
 
 export type settingsStateType = {
   logFile: string,
   startingPhrase: string,
   rollLimit: string,
-  timeLimit?: string
+  timeLimit?: string,
+  autoClipboard: boolean
 };
 
 type actionType = {
@@ -17,7 +18,8 @@ const initialState = {
   logFile: '',
   startingPhrase: 'You shout, \'roll for',
   rollLimit: '100',
-  timeLimit: '20'
+  timeLimit: '20',
+  autoClipboard: false
 };
 
 export default function settings(state: settingsStateType = initialState, action: actionType) {
@@ -30,6 +32,8 @@ export default function settings(state: settingsStateType = initialState, action
       return { ...state, rollLimit: action.payload };
     case SET_TIME_LIMIT:
       return { ...state, timeLimit: action.payload };
+    case SET_AUTO_CLIPBOARD:
+      return { ...state, autoClipboard: action.payload };
     default:
       return state;
   }
