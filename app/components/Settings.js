@@ -61,7 +61,7 @@ class Settings extends Component {
         </div>
         <div className={styles.limits} >
           <div>Roll Limit:<br /><input name="rollLimit" type="number" disabled={parsing} className={styles.input} value={rollLimit} onChange={::this.handleInputChange} /></div>
-          <div className={styles.checkbox}><input name="autoClipboard" type="checkbox" checked={autoClipboard} onChange={::this.handleInputChange}/> Add winners to clipboard</div>
+          <div className={styles.checkbox}><input disabled={parsing} name="autoClipboard" type="checkbox" checked={autoClipboard} onChange={::this.handleInputChange}/> Add winners to clipboard</div>
         </div>
       </div>
     );

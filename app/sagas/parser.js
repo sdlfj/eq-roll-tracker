@@ -25,6 +25,7 @@ export function* beginParsing() {
   const tail = new Tail(settings.logFile);
   yield put(actions.setParsing(true));
 
+  yield put(actions.resetRolls());
   if (settings.startingPhrase.length === 0) {
     yield put(actions.setStatus('collecting rolls'));
   } else {
