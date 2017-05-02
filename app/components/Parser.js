@@ -103,15 +103,14 @@ class Parser extends Component {
 
     const { timeLeft } = this.state;
 
-    const timeString = () => {
-      if (startingPhrase.length > 0) {
-        if (timerActive) {
-          return <span><b> Time left:</b> {timeLeft}</span>;
-        } else if (timeLimit) {
-          return <span><b> Time left:</b> {timeLimit}</span>;
-        }
+    let timeString = null;
+    if (startingPhrase.length > 0) {
+      if (timerActive) {
+        timeString = <span><b> Time left:</b> {timeLeft}</span>;
+      } else if (timeLimit) {
+        timeString = <span><b> Time left:</b> {timeLimit}</span>;
       }
-    };
+    }
 
     return (
       <div className={styles.parser}>
@@ -123,7 +122,7 @@ class Parser extends Component {
         <div className={styles.status} >
           <div className={styles.left}><b>Status:</b> {status}</div>
           <div className={styles.right}>
-            <b># of Rolls:</b> {rolls.length}{timeString()}
+            <b># of Rolls:</b> {rolls.length}{timeString}
           </div>
         </div>
         <RollList rolls={rolls} />
