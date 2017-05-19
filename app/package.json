@@ -1,7 +1,7 @@
 {
   "name": "eq-roll-tracker",
   "productName": "EqRollTracker",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Electron app that monitors EverQuest log files for player /random's",
   "main": "main.js",
   "author": {
