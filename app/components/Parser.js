@@ -71,7 +71,7 @@ class Parser extends Component {
     const { timeLimit, timerStartTime } = this.props;
     this.clearTimers();
 
-    if (timeLimit !== undefined) {
+    if (timeLimit !== undefined && !isNaN(timeLimit) && !isNaN(parseInt(timeLimit, 10))) {
       this.setState({ timeLeft: timeLimit });
       this.countdownInterval = setInterval(() => {
         this.setState({ timeLeft: getTimeLeft(timerStartTime, timeLimit * 1000) });

@@ -53,12 +53,15 @@ export function* parseNewLine(action) {
   const settings = yield select(getSettings);
   const parser = yield select(getParser);
   const line = action.payload;
+  const timeLimit = settings.timeLimit;
   if (parser.status === 'awaiting phrase' || parser.status === 'collecting rolls') {
     const match = new RegExp(`^${settings.startingPhrase}`).exec(line);
     if (match !== null && settings.startingPhrase.length > 0) {
       yield put(actions.resetRolls());
       yield put(actions.setStatus('collecting rolls'));
-      yield put(startTimer());
+      if (timeLimit !== undefined && !isNaN(timeLimit) && !isNaN(parseInt(timeLimit, 10))) {
+        yield put(startTimer());
+      }
 
       return;
     }
