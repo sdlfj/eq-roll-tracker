@@ -6,7 +6,7 @@ import * as ParserActions from '../actions/parser';
 import styles from './Parser.css';
 import RollList from './RollList';
 import type { rollType } from '../reducers/parser';
-import soundFile from '../sound/sound.wav';
+import soundFile from '../sound/sound.wav'; // eslint-disable-line
 
 const getTimeLeft = (startTime: number, limit: number) =>
   Math.ceil((limit - (new Date().getTime() - startTime)) / 1000);
@@ -83,7 +83,7 @@ class Parser extends Component {
       }, 1000);
 
       this.countdownTimeout = setTimeout(() => {
-        if(playSound === true) {
+        if (playSound === true) {
           this.audio.play(); // eslint-disable-line
         }
         this.props.countdownEnded();
