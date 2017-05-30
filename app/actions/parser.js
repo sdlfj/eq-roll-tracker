@@ -9,6 +9,7 @@ export const ADD_ROLL = 'ADD_ROLL';
 export const RESET_ROLLS = 'RESET_ROLLS';
 export const SET_STATUS = 'SET_STATUS';
 export const SET_PARSING = 'SET_PARSING';
+export const SET_DETECTED_PHRASE = 'SET_DETECTED_PHRASE';
 export const COUNTDOWN_ENDED = 'COUNTDOWN_ENDED';
 export const NEW_LINE = 'NEW_LINE';
 export const RESET = 'RESET';
@@ -63,6 +64,13 @@ export function setParsing(parsing: boolean) {
   return {
     type: SET_PARSING,
     payload: parsing
+  };
+}
+
+export function setDetectedPhrase(detectedPhrase: string) {
+  return {
+    type: SET_DETECTED_PHRASE,
+    payload: detectedPhrase
   };
 }
 

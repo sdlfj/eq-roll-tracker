@@ -54,11 +54,14 @@ export function* parseNewLine(action) {
   const parser = yield select(getParser);
   const line = action.payload;
   const timeLimit = settings.timeLimit;
-  if (parser.status === 'awaiting phrase' || parser.status === 'collecting rolls') {
+  if (parser.status === 'awaiting phrase'
+    || parser.status === 'ended - awaiting next phrase'
+    || parser.status === 'collecting rolls') {
     const match = new RegExp(`^${settings.startingPhrase}`).exec(line);
     if (match !== null && settings.startingPhrase.length > 0) {
       yield put(actions.resetRolls());
       yield put(actions.setStatus('collecting rolls'));
+      yield put(actions.setDetectedPhrase(line));
       if (timeLimit !== undefined && !isNaN(timeLimit) && !isNaN(parseInt(timeLimit, 10))) {
         yield put(startTimer());
       }
@@ -125,7 +128,7 @@ export function* rollBuilder(action) {
 
 export function* countdownEnded() {
   const settings = yield select(getSettings);
-  yield put(actions.setStatus('awaiting phrase'));
+  yield put(actions.setStatus('ended - awaiting next phrase'));
   yield put(stopTimer());
   const winningRolls = yield select(getWinners);
   if (settings.autoClipboard && winningRolls && winningRolls.length > 0) {

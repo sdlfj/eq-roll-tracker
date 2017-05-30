@@ -19,6 +19,10 @@ export default {
           cacheDirectory: true
         }
       }
+    },
+    {
+      test: /\.wav$/,
+      use: 'url-loader'
     }]
   },
 

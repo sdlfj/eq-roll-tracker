@@ -1,6 +1,6 @@
 .rollList {
   position: absolute;
-  padding: 0;
+  padding: 0px;
   margin: 0;
   left: 50%;
   transform: translate(-50%, 0);
@@ -11,4 +11,11 @@
   overflow-x: hidden;
   overflow-y: auto;
   list-style-type: unset;
+}
+
+.detectedPhrase {
+  background-color: #c1e7f7;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid;
 }

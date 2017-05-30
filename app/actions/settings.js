@@ -4,6 +4,7 @@ export const SET_STARTING_PHRASE = 'SET_STARTING_PHRASE';
 export const SET_ROLL_LIMIT = 'SET_ROLL_LIMIT';
 export const SET_TIME_LIMIT = 'SET_TIME_LIMIT';
 export const SET_AUTO_CLIPBOARD = 'SET_AUTO_CLIPBOARD';
+export const SET_PLAY_SOUND = 'SET_PLAY_SOUND';
 
 export function setLogFile(filePath: string) {
   return {
@@ -16,6 +17,13 @@ export function setStartingPhrase(startingPhrase: string) {
   return {
     type: SET_STARTING_PHRASE,
     payload: startingPhrase
+  };
+}
+
+export function setPlaySound(playSound: boolean) {
+  return {
+    type: SET_PLAY_SOUND,
+    payload: playSound
   };
 }
 

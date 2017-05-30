@@ -6,9 +6,11 @@ import * as ParserActions from '../actions/parser';
 import styles from './Parser.css';
 import RollList from './RollList';
 import type { rollType } from '../reducers/parser';
+import soundFile from '../sound/sound.wav';
 
 const getTimeLeft = (startTime: number, limit: number) =>
   Math.ceil((limit - (new Date().getTime() - startTime)) / 1000);
+// const soundFile = '../app/sound/sound.wav';
 
 class Parser extends Component {
   state: {
@@ -27,7 +29,9 @@ class Parser extends Component {
     timerActive: boolean,
     timerStartTime: number,
     timeLimit?: number,
-    startingPhrase: string
+    startingPhrase: string,
+    detectedPhrase: string,
+    playSound: boolean
   }
 
   countdownTimeout: ?number;
@@ -40,6 +44,7 @@ class Parser extends Component {
 
   constructor(props) {
     super(props);
+    this.audio = new Audio(soundFile); // eslint-disable-line
     this.state = { timeLeft: props.timeLimit };
   }
 
@@ -68,7 +73,7 @@ class Parser extends Component {
   }
 
   startCountdown() {
-    const { timeLimit, timerStartTime } = this.props;
+    const { timeLimit, timerStartTime, playSound } = this.props;
     this.clearTimers();
 
     if (timeLimit !== undefined && !isNaN(timeLimit) && !isNaN(parseInt(timeLimit, 10))) {
@@ -78,6 +83,9 @@ class Parser extends Component {
       }, 1000);
 
       this.countdownTimeout = setTimeout(() => {
+        if(playSound === true) {
+          this.audio.play(); // eslint-disable-line
+        }
         this.props.countdownEnded();
       }, timeLimit * 1000);
     }
@@ -98,17 +106,19 @@ class Parser extends Component {
       parsing, validSettings, rolls,
       status, beginParsing, endParsing,
       reset, timerActive, timeLimit,
-      startingPhrase
+      startingPhrase, detectedPhrase
     } = this.props;
 
     const { timeLeft } = this.state;
 
     let timeString = null;
-    if (startingPhrase.length > 0) {
+    if (status === 'ended - awaiting next phrase') {
+      timeString = <span><b> Time:</b> 0</span>;
+    } else if (startingPhrase.length > 0) {
       if (timerActive) {
-        timeString = <span><b> Time left:</b> {timeLeft}</span>;
+        timeString = <span><b> Time:</b> {timeLeft}</span>;
       } else if (timeLimit) {
-        timeString = <span><b> Time left:</b> {timeLimit}</span>;
+        timeString = <span><b> Time:</b> {timeLimit}</span>;
       }
     }
 
@@ -122,10 +132,10 @@ class Parser extends Component {
         <div className={styles.status} >
           <div className={styles.left}><b>Status:</b> {status}</div>
           <div className={styles.right}>
-            <b># of Rolls:</b> {rolls.length}{timeString}
+            <b>Rollcount:</b> {rolls.length}{timeString}
           </div>
         </div>
-        <RollList rolls={rolls} />
+        <RollList rolls={rolls} detectedPhrase={detectedPhrase} />
       </div>
     );
   }
@@ -140,7 +150,9 @@ function mapStateToProps(state) {
     timerActive: state.timer.active,
     timerStartTime: state.timer.startTime,
     timeLimit: parseInt(state.settings.timeLimit, 10),
-    startingPhrase: state.settings.startingPhrase
+    startingPhrase: state.settings.startingPhrase,
+    detectedPhrase: state.parser.detectedPhrase,
+    playSound: state.settings.playSound
   };
 }
 

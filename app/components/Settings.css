@@ -2,15 +2,15 @@
   width: 80%;
 }
 
-.limits {
-  display: flex;
-}
-
-.checkbox input {
-  margin-top: 15px;
-}
-
 .limits div{
   width: 50%;
   float: left;
+}
+
+.timeOptions {
+  width: 50%;
+}
+
+.timeOptions div {
+  width: 100%;
 }

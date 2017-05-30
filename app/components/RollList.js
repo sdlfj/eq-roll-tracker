@@ -5,11 +5,12 @@ import styles from './RollList.css';
 
 class RollList extends Component {
   props: {
-    rolls: Array<rollType>
+    rolls: Array<rollType>,
+    detectedPhrase: string
   };
 
   render() {
-    const { rolls } = this.props;
+    const { rolls, detectedPhrase } = this.props;
 
     const rollElements = rolls.map(
       (roll) => <li key={roll.playerName}>{roll.playerName} {roll.rollValue}</li>
@@ -17,6 +18,9 @@ class RollList extends Component {
 
     return (
       <ul className={styles.rollList}>
+        { detectedPhrase && detectedPhrase.length > 0 &&
+          <li className={styles.detectedPhrase} >{detectedPhrase}</li>
+        }
         { rollElements }
       </ul>
     );

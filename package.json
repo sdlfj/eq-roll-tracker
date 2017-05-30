@@ -1,7 +1,7 @@
 {
   "name": "eq-roll-tracker",
   "productName": "EqRollTracker",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "Electron app that monitors EverQuest log files for player /random's",
   "main": "main.js",
   "scripts": {
@@ -41,7 +41,8 @@
       "app.html",
       "main.js",
       "main.js.map",
-      "package.json"
+      "package.json",
+      "app/sound/sound.wav"
     ],
     "dmg": {
       "contents": [
@@ -75,12 +76,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://sdlfj@bitbucket.org/sdlfj/eq-roll-tracker.git"
+    "url": "https://github.com/sdlfj/eq-roll-tracker.git"
   },
   "author": {
     "name": "sdlfj",
     "email": "g_rice@protonmail.com",
-    "url": "https://bitbucket.org/sdlfj"
+    "url": "https://github.com/sdlfj"
   },
   "license": "MIT",
   "keywords": [
@@ -88,7 +89,7 @@
     "project1999",
     "project2002"
   ],
-  "homepage": "https://bitbucket.org/sdlfj/eq-roll-tracker",
+  "homepage": "https://github.com/sdlfj/eq-roll-tracker",
   "jest": {
     "moduleNameMapper": {
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/mocks/fileMock.js",

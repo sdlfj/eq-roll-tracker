@@ -21,7 +21,8 @@ class Settings extends Component {
     rollLimit: string | number,
     parsing: boolean,
     timeLimit?: string | number,
-    autoClipboard: boolean
+    autoClipboard: boolean,
+    playSound: boolean
   };
   /* eslint-enable */
 
@@ -45,11 +46,16 @@ class Settings extends Component {
     this.props[`set${name}`](value);
   }
 
+  isTimeLimitValid() {
+    const { timeLimit } = this.props;
+    return !isNaN(timeLimit) && !isNaN(parseInt(timeLimit, 10));
+  }
+
   render() {
     const {
       logFile, startingPhrase,
       rollLimit, parsing, timeLimit,
-      autoClipboard
+      autoClipboard, playSound
     } = this.props;
     /* eslint-disable */
     return (
@@ -61,7 +67,12 @@ class Settings extends Component {
         </div>
         <div className={styles.limits} >
           <div>Roll Limit:<br /><input name="rollLimit" type="number" disabled={parsing} className={styles.input} value={rollLimit} onChange={::this.handleInputChange} /></div>
-          <div className={styles.checkbox}><input disabled={parsing} name="autoClipboard" type="checkbox" checked={autoClipboard} onChange={::this.handleInputChange}/> Add winners to clipboard</div>
+          { this.isTimeLimitValid() && timeLimit > 0 &&
+            <div className={styles.timeOptions}>
+              <div className={styles.checkbox}><input disabled={parsing || !this.isTimeLimitValid() || parseInt(timeLimit, 10) === 0} name="autoClipboard" type="checkbox" checked={autoClipboard} onChange={::this.handleInputChange}/> Add winners to clipboard</div>
+              <div className={styles.checkbox}><input disabled={parsing || !this.isTimeLimitValid() || parseInt(timeLimit, 10) === 0} name="playSound" type="checkbox" checked={playSound} onChange={::this.handleInputChange}/> Play Sound</div>
+            </div>
+          }
         </div>
       </div>
     );
@@ -76,7 +87,8 @@ function mapStateToProps(state) {
     rollLimit: state.settings.rollLimit,
     parsing: state.parser.parsing,
     timeLimit: state.settings.timeLimit,
-    autoClipboard: state.settings.autoClipboard
+    autoClipboard: state.settings.autoClipboard,
+    playSound: state.settings.playSound
   };
 }
 
