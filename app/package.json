@@ -15,7 +15,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "redux-saga": "^0.14.8",
-    "tail": "^1.2.1"
+    "node-tail": "0.0.4",
+    "redux-saga": "^0.14.8"
   }
 }

@@ -22,7 +22,7 @@ const tailChannel = channel();
 
 export function* beginParsing() {
   const settings = yield select(getSettings);
-  const tail = new Tail(settings.logFile);
+  const tail = new Tail(settings.logFile, { fsWatchOptions: {interval: 1000}, useWatchFile: true });
   yield put(actions.setParsing(true));
 
   yield put(actions.resetRolls());
